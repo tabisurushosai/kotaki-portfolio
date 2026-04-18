@@ -1,0 +1,30 @@
+{
+  "name": "kotaki-portfolio",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "generate:assets": "node scripts/generate-assets.mjs",
+    "prebuild": "npm run generate:assets",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:css": "tailwindcss -i ./src/styles/globals.css -o ./portfolio-tw.css --minify"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.4.21",
+    "png-to-ico": "^2.1.8",
+    "postcss": "^8.5.3",
+    "sharp": "^0.34.2",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3",
+    "vite": "^8.0.8"
+  },
+  "dependencies": {
+    "lucide-react": "^1.8.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  }
+}

@@ -1,0 +1,38 @@
+/**
+ * デザイントークン（CSS 変数）
+ * Tailwind theme と値を揃え、将来のダークモード等で参照しやすくする。
+ */
+:root {
+  --brand-primary: #1e3a5f;
+  --brand-primary-deep: #152a45;
+  --brand-accent: #c9a961;
+  --brand-accent-soft: #d4b978;
+  --brand-ink: #2c3e50;
+  --brand-paper: #f8f9fa;
+  --brand-line: #e5e7eb;
+
+  --radius-card: 12px;
+  --shadow-card: 0 1px 2px rgba(30, 58, 95, 0.06);
+  --shadow-soft: 0 4px 14px rgba(30, 58, 95, 0.08);
+
+  --spacing-section: 7rem;
+  --spacing-section-mobile: 3.5rem;
+
+  /** アンカー・スクロール時に固定ヘッダーと重ならない余白（約 56px + 余白） */
+  --site-header-scroll-padding: 5rem;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --site-header-scroll-padding: 4.5rem;
+  }
+}
+
+/* ダークモード用フック（未使用。トークンだけ先行定義） */
+.dark {
+  /* 例:
+  --brand-ink: #e8eaed;
+  --brand-paper: #121820;
+  --brand-line: #2a3441;
+  */
+}

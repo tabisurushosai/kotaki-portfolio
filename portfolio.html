@@ -1,0 +1,2387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小瀧雄基 / Yuki Kotaki - 教育 × AI × 実装</title>
+  <meta name="description" content="現場で使えるAIツールを、教育と臨床の視点で設計し、実装まで一貫して行います。元小学校教諭、教育学修士、学校心理士。" />
+  <meta property="og:title" content="小瀧雄基 / Yuki Kotaki - 教育 × AI × 実装" />
+  <meta property="og:description" content="現場で使えるAIツールを、教育と臨床の視点で設計し、実装まで一貫して行います。元小学校教諭、教育学修士、学校心理士。" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231B4F72'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Inter%2C%20sans-serif' font-size='26' font-weight='700' fill='white'%3EYK%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --main-color: #1B4F72;
+      --sub-color: #2E75B6;
+      --accent-color: #F39C12;
+      --bg-color: #FFFFFF;
+      --section-bg: #F8F9FA;
+      --text-color: #2C3E50;
+      --muted-color: #7F8C8D;
+      --container-width: 900px;
+      --section-gap-desktop: 80px;
+      --section-gap-mobile: 48px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: "Noto Sans JP", sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 72px;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--container-width));
+      margin: 0 auto;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      border-bottom: 1px solid rgba(230, 236, 242, 0.9);
+      box-shadow: 0 1px 12px rgba(15, 51, 80, 0.06);
+    }
+
+    .site-nav-inner {
+      width: min(100% - 24px, 1040px);
+      margin: 0 auto;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .site-nav-brand {
+      flex: 0 0 auto;
+      color: var(--main-color);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .site-nav-links {
+      flex: 1 1 auto;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+      gap: 4px 14px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .site-nav-links::-webkit-scrollbar {
+      display: none;
+    }
+
+    .site-nav-links a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 4px;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .site-nav-links a:hover {
+      color: var(--main-color);
+      border-bottom-color: var(--sub-color);
+    }
+
+    section {
+      padding: var(--section-gap-desktop) 0;
+    }
+
+    main > section {
+      background: var(--bg-color);
+    }
+
+    main > section + section {
+      position: relative;
+    }
+
+    main > section + section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(160px, 42%);
+      border-top: 1px dashed #D7DEE6;
+      opacity: 0.9;
+    }
+
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .header-section {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 64px;
+    }
+
+    .profile-photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 24%;
+      border: 4px solid var(--sub-color);
+      box-shadow: 0 0 0 2px rgba(27, 79, 114, 0.24);
+      background: #E9ECEF;
+      display: block;
+      margin-inline: auto;
+      margin-bottom: 24px;
+    }
+
+    .name-jp {
+      margin: 0;
+    }
+
+    .name-en {
+      margin: 4px 0 8px;
+      font-family: "Inter", sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted-color);
+      letter-spacing: 0.03em;
+    }
+
+    .subtitle {
+      margin: 0 0 20px;
+    }
+
+    .catch-copy-wrap {
+      margin: 0 auto 28px;
+      max-width: 560px;
+      padding: 22px 24px 24px;
+      text-align: center;
+      background: linear-gradient(165deg, #F5F8FB 0%, #FAFCFD 48%, #FFFFFF 100%);
+      border: 1px solid #E2EAF2;
+      border-radius: 16px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 8px 24px rgba(27, 79, 114, 0.07);
+    }
+
+    .catch-copy {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.65;
+      color: var(--main-color);
+      letter-spacing: 0.02em;
+    }
+
+    .catch-copy-sub {
+      margin: 12px 0 0;
+      padding: 0;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--muted-color);
+      letter-spacing: 0.02em;
+    }
+
+    .badge-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: #EEF1F4;
+      color: var(--main-color);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .placeholder {
+      text-align: center;
+      border-radius: 12px;
+      padding: 28px 16px;
+    }
+
+    .placeholder h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--main-color);
+    }
+
+    .authority-section {
+      background: var(--section-bg);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      margin: 0;
+    }
+
+    .section-lead {
+      margin: 8px 0 0;
+      font-size: 15px;
+      color: var(--text-color);
+    }
+
+    .story-section {
+      background: var(--bg-color);
+    }
+
+    .story-section .section-header {
+      margin-bottom: 32px;
+    }
+
+    .story-list {
+      list-style: none;
+      margin: 0 auto;
+      padding: 0;
+      max-width: 720px;
+      counter-reset: story-step 0;
+    }
+
+    .story-list > li {
+      position: relative;
+      counter-increment: story-step;
+      padding-left: 52px;
+      margin-bottom: 26px;
+    }
+
+    .story-list > li:last-child {
+      margin-bottom: 0;
+    }
+
+    .story-list > li::before {
+      content: counter(story-step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--main-color);
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 34px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+    }
+
+    .story-list > li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 40px;
+      bottom: -18px;
+      width: 2px;
+      background: #D7DEE6;
+    }
+
+    .story-step-title {
+      margin: 0;
+    }
+
+    .story-step-text {
+      margin: 8px 0 0;
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text-color);
+    }
+
+    .research-topic {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .research-topic li {
+      margin-top: 4px;
+    }
+
+    .works-section {
+      background: var(--section-bg);
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      counter-reset: work-item;
+    }
+
+    .work-card {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      counter-increment: work-item;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .work-card::after {
+      content: counter(work-item, decimal-leading-zero);
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      color: #A8B0B8;
+      font-size: 12px;
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
+    .work-visual {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 10px;
+      background: #F7F9FC;
+      border: 1px solid #EDF1F5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .work-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
+    }
+
+    .work-icon-svg {
+      width: 56px;
+      height: 56px;
+      color: var(--main-color);
+      flex-shrink: 0;
+    }
+
+    .work-icon-svg path,
+    .work-icon-svg circle,
+    .work-icon-svg line,
+    .work-icon-svg polyline,
+    .work-icon-svg rect {
+      vector-effect: non-scaling-stroke;
+    }
+
+    .work-title {
+      margin: 0;
+    }
+
+    .work-description {
+      margin: 8px 0 0;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .work-client {
+      margin: 14px 0 0;
+      font-size: 13px;
+      color: var(--muted-color);
+      margin-top: auto;
+      padding-top: 10px;
+    }
+
+    .work-card--group {
+      grid-column: 1 / -1;
+    }
+
+    .work-card--group .work-visual {
+      aspect-ratio: auto;
+      min-height: 100px;
+      max-height: 120px;
+      padding: 16px 18px;
+      justify-content: center;
+    }
+
+    .work-card--group .work-icon-svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .work-card--group .work-title-sub {
+      margin: 0 0 6px;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.55;
+      color: var(--muted-color);
+      letter-spacing: 0.02em;
+    }
+
+    .work-card--group .work-client {
+      margin-top: 10px;
+    }
+
+    .work-sublist {
+      margin: 16px 0 0;
+      padding: 0;
+      border-top: 1px solid #EDF1F5;
+    }
+
+    .work-sub {
+      border-bottom: 1px solid #EDF1F5;
+    }
+
+    .work-sub:last-child {
+      border-bottom: none;
+    }
+
+    .work-sub > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 4px 14px 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--main-color);
+      line-height: 1.45;
+    }
+
+    .work-sub > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .work-sub > summary::after {
+      content: "";
+      margin-left: auto;
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid var(--muted-color);
+      border-bottom: 2px solid var(--muted-color);
+      transform: rotate(45deg);
+      margin-top: 6px;
+      transition: transform 0.2s ease;
+    }
+
+    .work-sub[open] > summary::after {
+      transform: rotate(225deg);
+      margin-top: 10px;
+    }
+
+    .work-sub-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
+      flex-shrink: 0;
+    }
+
+    .work-sub-icon-svg {
+      width: 22px;
+      height: 22px;
+      color: var(--main-color);
+    }
+
+    .work-sub-icon-svg path,
+    .work-sub-icon-svg circle,
+    .work-sub-icon-svg line,
+    .work-sub-icon-svg polyline,
+    .work-sub-icon-svg rect {
+      vector-effect: non-scaling-stroke;
+    }
+
+    .work-sub-summary-main {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+      padding-right: 6px;
+    }
+
+    .work-sub-summary-title {
+      font-size: inherit;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .work-sub-summary-teaser {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted-color);
+      line-height: 1.45;
+    }
+
+    .work-sub[open] > summary .work-sub-summary-teaser {
+      display: none;
+    }
+
+    .work-sub-body {
+      padding: 0 4px 14px 32px;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-color);
+    }
+
+    .work-sub-body p {
+      margin: 0;
+    }
+
+    .works-trust-note {
+      margin: 4px auto 22px;
+      max-width: 640px;
+      padding: 14px 18px;
+      text-align: center;
+      background: linear-gradient(180deg, #f3f7fb 0%, #eef4f9 100%);
+      border: 1px solid rgba(27, 79, 114, 0.18);
+      border-radius: 12px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) inset;
+    }
+
+    .works-trust-note p {
+      margin: 0;
+      color: #3d4f61;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.75;
+    }
+
+    .works-trust-note-highlight {
+      display: inline;
+      color: var(--main-color);
+      font-weight: 700;
+    }
+
+    .works-proof-lead a {
+      color: var(--sub-color);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 700;
+    }
+
+    .works-section .works-proof--intro {
+      margin: 6px auto 22px;
+    }
+
+    .works-proof {
+      margin: 28px auto 0;
+      max-width: 880px;
+      border: 1px solid #D7E3F1;
+      border-left: 6px solid #2E75B6;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #F2F8FF 0%, #FAFCFF 52%, #FFFFFF 100%);
+      box-shadow: 0 8px 22px rgba(27, 79, 114, 0.10);
+      padding: 18px 20px;
+      color: #425A70;
+      font-size: 14px;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .works-proof-kicker {
+      display: inline-block;
+      margin: 0 0 6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #2E75B6;
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+      line-height: 1.5;
+    }
+
+    .works-proof-title {
+      margin: 0;
+      color: var(--main-color);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .works-proof-lead {
+      margin: 8px 0 0;
+      color: #3F5770;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .works-proof-list {
+      margin: 12px 0 0;
+      padding-left: 1.2em;
+    }
+
+    .works-proof-list li + li {
+      margin-top: 6px;
+    }
+
+    .capabilities-section {
+      background: var(--bg-color);
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      min-width: 0;
+    }
+
+    .capability-item {
+      background: #FFFFFF;
+      border-radius: 8px;
+      padding: 20px;
+      display: block;
+      min-width: 0;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .capability-title {
+      margin: 0;
+    }
+
+    .capability-description {
+      margin: 6px 0 0;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .research-section {
+      background: var(--section-bg);
+    }
+
+    .research-collab-card {
+      margin: 4px auto 24px;
+      max-width: 560px;
+      padding: 18px 20px 16px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #dde5ed;
+      border-left: 4px solid var(--main-color);
+      box-shadow: 0 2px 10px rgba(27, 79, 114, 0.07);
+    }
+
+    .research-collab-kicker {
+      display: inline-block;
+      margin: 0 0 10px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: rgba(27, 79, 114, 0.1);
+      color: var(--main-color);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+    }
+
+    .research-collab-name {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--main-color);
+    }
+
+    .research-collab-affil {
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #4a5f73;
+      font-weight: 600;
+    }
+
+    .research-collab-story {
+      margin: 0;
+      padding-top: 12px;
+      border-top: 1px dashed #c8d4df;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-color);
+    }
+
+    .paper-subtitle {
+      margin: 0 0 16px;
+    }
+
+    .paper-subtitle.with-top-space {
+      margin-top: 24px;
+    }
+
+    .paper-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .paper-card {
+      border-left: 4px solid var(--main-color);
+      background: #FFFFFF;
+      border-radius: 10px;
+      border-top: 1px solid #E7ECF1;
+      border-right: 1px solid #E7ECF1;
+      border-bottom: 1px solid #E7ECF1;
+      padding: 16px 16px 14px;
+    }
+
+    .paper-header {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .paper-year {
+      display: inline-block;
+      background: #F39C12;
+      color: #FFFFFF;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 5px 8px;
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
+
+    .paper-title {
+      margin: 0;
+    }
+
+    .paper-meta {
+      margin: 0;
+      color: var(--muted-color);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .paper-signal {
+      margin: 8px 0 0;
+      font-size: 12px;
+      line-height: 1.65;
+      color: #4A5F73;
+      font-weight: 600;
+    }
+
+    .paper-card--refereed {
+      background: linear-gradient(135deg, rgba(27, 79, 114, 0.06) 0%, #FFFFFF 42%);
+    }
+
+    .conference-placeholder {
+      margin: 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted-color);
+      padding: 12px 0;
+    }
+
+    .timeline-section {
+      background: var(--bg-color);
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 6px;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 24px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: #CCCCCC;
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      position: relative;
+      display: flex;
+      gap: 16px;
+      padding-left: 12px;
+      margin-bottom: 24px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 24px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #B8C3CF;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .timeline-item.is-current .timeline-dot,
+    .timeline-item.is-latest .timeline-dot {
+      background: var(--accent-color);
+    }
+
+    .timeline-content {
+      margin-left: 22px;
+      width: 100%;
+    }
+
+    .timeline-year {
+      margin: 0;
+      color: var(--accent-color);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+    }
+
+    .timeline-role {
+      margin: 3px 0 0;
+      color: var(--main-color);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .timeline-note {
+      margin: 3px 0 0;
+      color: var(--muted-color);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .stance-section {
+      background: var(--main-color);
+      color: #FFFFFF;
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+
+    .stance-section::before {
+      border-top-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .stance-section .section-title {
+      color: #FFFFFF;
+    }
+
+    .stance-section .section-lead {
+      color: #E0E0E0;
+    }
+
+    .stance-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .stance-item {
+      margin-bottom: 40px;
+    }
+
+    .stance-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .stance-heading {
+      margin: 0;
+    }
+
+    .stance-number {
+      color: #F39C12;
+      font-size: 24px;
+      margin-right: 4px;
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+    }
+
+    .stance-text {
+      margin: 8px 0 0;
+      font-size: 15px;
+      color: #E0E0E0;
+      line-height: 1.8;
+    }
+
+    .stance-note {
+      margin: 28px 0 0;
+      font-size: 14px;
+      color: #E0E0E0;
+      line-height: 1.8;
+    }
+
+    main section.contact-section {
+      background: var(--bg-color);
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+
+    .contact-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-divider {
+      width: 60px;
+      height: 1px;
+      background: #D8DDE3;
+      margin: 0 auto;
+    }
+
+    .contact-main {
+      margin: 20px 0 0;
+      color: var(--main-color);
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.8;
+    }
+
+    .contact-sub {
+      margin: 16px 0 0;
+      color: var(--text-color);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .contact-divider.bottom {
+      margin-top: 20px;
+    }
+
+    .contact-notes {
+      margin: 16px 0 0;
+      color: var(--muted-color);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .contact-notes p {
+      margin: 0;
+    }
+
+    .footer {
+      background: #0F3350;
+      text-align: center;
+      padding: 40px 16px 44px;
+      color: #FFFFFF;
+      font-family: "Inter", "Noto Sans JP", sans-serif;
+      font-size: 14px;
+      border-top: 1px solid #0B2A41;
+    }
+
+    .footer-name {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.5;
+    }
+
+    .footer-copy {
+      margin: 6px 0 0;
+      color: #D9E4EE;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .footer-nav {
+      margin: 16px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 14px;
+    }
+
+    .footer-nav a {
+      color: #DCE8F3;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    .footer-links {
+      margin: 16px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 14px 22px;
+    }
+
+    .footer-profile-link {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      max-width: 100%;
+      min-width: 0;
+      text-decoration: none;
+      color: #DCE8F3;
+      letter-spacing: 0.02em;
+      transition: color 0.2s ease;
+    }
+
+    .footer-profile-link:hover {
+      color: #FFFFFF;
+    }
+
+    .footer-profile-label {
+      display: block;
+      max-width: 9.5rem;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.35;
+      text-align: center;
+      color: inherit;
+    }
+
+    .footer-profile-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #50708C;
+      background: #113B5D;
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .footer-profile-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .footer-profile-icon svg path,
+    .footer-profile-icon svg line,
+    .footer-profile-icon svg polyline,
+    .footer-profile-icon svg polygon {
+      vector-effect: non-scaling-stroke;
+    }
+
+    .footer-profile-link:hover .footer-profile-icon {
+      background: #1A4A71;
+      border-color: #6D8DA7;
+      transform: translateY(-2px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .footer-profile-link:hover .footer-profile-icon {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      section {
+        padding: var(--section-gap-mobile) 0;
+      }
+
+      html {
+        scroll-padding-top: 60px;
+      }
+
+      .site-nav-inner {
+        height: 48px;
+        gap: 12px;
+      }
+
+      .site-nav-brand {
+        font-size: 14px;
+      }
+
+      .site-nav-links {
+        gap: 4px 12px;
+      }
+
+      .site-nav-links a {
+        font-size: 12px;
+        padding: 4px 2px;
+      }
+
+      .header-section {
+        padding-top: 32px;
+      }
+
+      .catch-copy {
+        max-width: 100%;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .catch-copy-wrap {
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 18px 18px 20px;
+      }
+
+      .catch-copy-sub {
+        margin-top: 10px;
+        font-size: 13px;
+        line-height: 1.65;
+      }
+
+      .section-lead {
+        font-size: 14px;
+      }
+
+      .capabilities-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      .capability-item {
+        padding: 16px;
+      }
+
+      .paper-card {
+        padding: 14px 14px 12px;
+      }
+
+      .paper-header {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .timeline {
+        padding-left: 16px;
+      }
+
+      .timeline::before {
+        left: 16px;
+      }
+
+      .timeline-item {
+        gap: 12px;
+        padding-left: 8px;
+      }
+
+      .timeline-dot {
+        left: 16px;
+      }
+
+      .timeline-content {
+        margin-left: 18px;
+      }
+
+      .stance-section {
+        padding-top: 54px;
+        padding-bottom: 54px;
+      }
+
+      .stance-number {
+        font-size: 22px;
+      }
+
+      main section.contact-section {
+        padding-top: 54px;
+        padding-bottom: 54px;
+      }
+
+      .footer-name {
+        font-size: 16px;
+      }
+
+      .footer-profile-label {
+        font-size: 11px;
+        max-width: 11rem;
+      }
+
+      .authority-description,
+      .work-description,
+      .capability-description,
+      .contact-sub {
+        font-size: 16px;
+      }
+
+      .works-proof {
+        padding: 12px 14px;
+      }
+
+      /* スマホ：縦長・離脱を抑える（歩み / 制作実績 / 経歴） */
+      .story-section,
+      .works-section,
+      .timeline-section {
+        padding-top: 40px;
+        padding-bottom: 40px;
+      }
+
+      .story-section .section-header,
+      .works-section .section-header,
+      .timeline-section .section-header {
+        margin-bottom: 18px;
+      }
+
+      .story-list > li {
+        padding-left: 42px;
+        margin-bottom: 18px;
+      }
+
+      .story-list > li::before {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+        line-height: 28px;
+      }
+
+      .story-list > li:not(:last-child)::after {
+        left: 13px;
+        top: 32px;
+        bottom: -14px;
+      }
+
+      .story-step-text {
+        margin-top: 6px;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .works-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .work-card {
+        padding: 14px 14px 16px;
+      }
+
+      .work-visual {
+        aspect-ratio: 2 / 1;
+        margin-bottom: 12px;
+      }
+
+      .work-card--group .work-visual {
+        aspect-ratio: auto;
+        min-height: 88px;
+        max-height: 112px;
+        padding: 12px 14px;
+      }
+
+      .work-card--group .work-icon-svg {
+        width: 36px;
+        height: 36px;
+      }
+
+      .work-card--group .work-title-sub {
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+
+      .work-icon-svg {
+        width: 44px;
+        height: 44px;
+      }
+
+      .work-description {
+        margin-top: 6px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .work-client {
+        margin-top: 10px;
+        padding-top: 8px;
+        font-size: 12px;
+      }
+
+      .work-sublist {
+        margin-top: 12px;
+      }
+
+      .work-sub > summary {
+        align-items: flex-start;
+        min-height: 48px;
+        padding: 12px 10px 12px 2px;
+        font-size: 14px;
+        line-height: 1.45;
+        -webkit-tap-highlight-color: rgba(27, 79, 114, 0.14);
+        touch-action: manipulation;
+      }
+
+      .work-sub-summary-teaser {
+        font-size: 12px;
+      }
+
+      .work-sub > summary::after {
+        margin-top: 0;
+        align-self: center;
+      }
+
+      .work-sub[open] > summary::after {
+        margin-top: 0;
+      }
+
+      .work-sub-icon-svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .work-sub-body {
+        padding: 0 4px 10px 26px;
+        font-size: 13px;
+        line-height: 1.65;
+      }
+
+      .research-collab-card {
+        margin: 2px auto 20px;
+        padding: 14px 16px 14px;
+      }
+
+      .research-collab-name {
+        font-size: 17px;
+      }
+
+      .research-collab-affil {
+        font-size: 13px;
+      }
+
+      .research-collab-story {
+        font-size: 13px;
+        padding-top: 10px;
+      }
+
+      .works-trust-note {
+        margin: 2px auto 18px;
+        padding: 12px 14px;
+      }
+
+      .works-trust-note p {
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .timeline-item {
+        margin-bottom: 12px;
+        gap: 10px;
+      }
+
+      .timeline-year {
+        font-size: 13px;
+      }
+
+      .timeline-role {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-top: 2px;
+      }
+
+      .timeline-note {
+        font-size: 12px;
+        line-height: 1.55;
+        margin-top: 2px;
+      }
+    }
+
+    /* 狭い幅（iPhone SE / 14 Pro 相当）：バッジのはみ出し防止・読みやすさ */
+    @media (max-width: 420px) {
+      .badge-list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 0 2px;
+      }
+
+      .badge {
+        white-space: normal;
+        text-align: center;
+        line-height: 1.5;
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .works-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .work-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+      }
+
+      .capability-item:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .footer-nav a:hover {
+        text-decoration: underline;
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal-on-scroll,
+      .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    /* Print/PDF: prefer OS Japanese fonts to avoid incomplete webfont subsetting (e.g. missing 作 in headings). */
+    @media print {
+      * {
+        animation: none !important;
+        transition: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Meiryo", "MS PGothic", "Noto Sans CJK JP", "Noto Sans JP", sans-serif !important;
+      }
+
+      html,
+      body,
+      section,
+      .authority-section,
+      .story-section,
+      .works-section,
+      .capabilities-section,
+      .research-section,
+      .timeline-section,
+      .stance-section,
+      .contact-section,
+      .footer {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+      }
+
+      .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .footer-nav,
+      .footer-links {
+        display: none !important;
+      }
+
+      main > section + section::before {
+        display: none !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="./portfolio-tw.css" />
+</head>
+<body>
+  <header class="site-nav" aria-label="サイトナビゲーション">
+    <div class="site-nav-inner">
+      <a class="site-nav-brand" href="#top">小瀧 雄基</a>
+      <nav class="site-nav-links" aria-label="ページ内ジャンプ">
+        <a href="#authority">専門性</a>
+        <a href="#capabilities">できること</a>
+        <a href="#works">制作実績</a>
+        <a href="#story">歩み</a>
+        <a href="#research">研究・執筆</a>
+        <a href="#career">経歴</a>
+        <a href="#stance">スタンス</a>
+        <a href="#contact">お問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="header-section">
+      <div class="container">
+        <img
+          class="profile-photo"
+          src="./kotaki-profile.png"
+          alt="小瀧雄基のプロフィール写真"
+        />
+        <h1 class="name-jp h-display">小瀧 雄基</h1>
+        <p class="name-en mix-en">Yuki Kotaki</p>
+        <p class="subtitle hero-tagline">教育 × AI × 実装</p>
+        <div class="catch-copy-wrap">
+          <p class="catch-copy">
+            中小企業の経営判断と、学校現場の業務を、AIで軽くします。
+          </p>
+          <p class="catch-copy-sub">
+            現場で使えるAIツールを、教育と臨床の視点で設計し、実装まで一貫して行います。
+          </p>
+        </div>
+        <ul class="badge-list" aria-label="プロフィールバッジ">
+          <li class="badge">元小学校教諭（11年）</li>
+          <li class="badge">教育学修士</li>
+          <li class="badge">学校心理士会 三重県支部 副支部長</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="authority-section" id="authority">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title h-section">公的な立場・専門性</h2>
+          <p class="section-lead">教育現場・学術・公的機関での活動実績</p>
+        </div>
+        <div class="authority-grid">
+          <article class="authority-card">
+            <p class="authority-card-eyebrow">行政</p>
+            <h3 class="authority-card-title">三重県教育委員会 研修員</h3>
+            <span class="chip chip--period">2020–2021</span>
+            <p class="authority-description">
+              三重県総合教育センターにて、教員の指導力向上を目的とした研究員として2年間従事。
+            </p>
+          </article>
+
+          <article class="authority-card">
+            <p class="authority-card-eyebrow">資格</p>
+            <h3 class="authority-card-title">学校心理士</h3>
+            <span class="chip chip--status">2021年1月 · 取得</span>
+            <p class="authority-description">
+              学校現場における心理支援の専門資格として活動しています。
+            </p>
+          </article>
+
+          <article class="authority-card">
+            <p class="authority-card-eyebrow">学会</p>
+            <h3 class="authority-card-title">学校心理士会 三重県支部 副支部長</h3>
+            <span class="chip chip--status">現任</span>
+            <p class="authority-description">
+              三重県内の学校心理士のネットワークを束ね、学校現場の支援と研修を推進する副支部長として活動しています。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="capabilities-section" id="capabilities">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title h-section">できること</h2>
+          <p class="section-lead">AIと教育、両方の視点から現場で使える仕組みを作ります</p>
+        </div>
+        <div class="capabilities-grid">
+          <article class="capability-item text-left md:text-center">
+            <h3 class="capability-title h-card">業務特化シミュレーター構築</h3>
+            <p class="capability-description">
+              業務の意思決定を数字で支援する計算ツールを
+              設計・実装します。BS/PL連携、指標自動計算まで対応。
+            </p>
+          </article>
+
+          <article class="capability-item text-left md:text-center">
+            <h3 class="capability-title h-card">データ可視化ダッシュボード</h3>
+            <p class="capability-description">
+              散らばっている数字を一画面で把握できる形に整えます。
+              グラフ・ヒートマップ・リアルタイム集計。
+            </p>
+          </article>
+
+          <article class="capability-item text-left md:text-center">
+            <h3 class="capability-title h-card">NotebookLM参謀の設計</h3>
+            <p class="capability-description">
+              貴社専用のAI壁打ち相手を構築します。
+              ソース選定、プロンプト設計、運用テンプレート作成まで。
+            </p>
+          </article>
+
+          <article class="capability-item text-left md:text-center">
+            <h3 class="capability-title h-card">AIプロンプト設計</h3>
+            <p class="capability-description">
+              ClaudeやGeminiが最大限活きるプロンプトを設計。
+              業務フローに組み込める形で納品します。
+            </p>
+          </article>
+
+          <article class="capability-item text-left md:text-center">
+            <h3 class="capability-title h-card">AI連携による資料自動化</h3>
+            <p class="capability-description">
+              入力データから事業計画書やスライド用プロンプトを
+              自動生成する仕組みを作ります。
+            </p>
+          </article>
+
+          <article class="capability-item text-left md:text-center">
+            <h3 class="capability-title h-card">AI活用教育・研修設計</h3>
+            <p class="capability-description">
+              教員・経営者向けのAI活用研修を設計・実施。
+              大学院での研究成果を実務に落とし込んでいます。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="works-section" id="works">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title h-section">AI制作実績</h2>
+          <p class="section-lead">実際のクライアント様向けに構築した事例</p>
+        </div>
+        <aside class="works-trust-note" aria-label="守秘義務と対応規模の補足">
+          <p>
+            一部実績は守秘義務契約により詳細を匿名化していますが、
+            <strong class="works-trust-note-highlight">大手IT企業グループを含む案件にも対応しています。</strong>
+          </p>
+        </aside>
+        <div class="works-proof works-proof--intro" id="foundation" aria-label="制作実績の前提となる補足資料（BASE INFO）">
+          <p class="works-proof-kicker">BASE INFO</p>
+          <p class="works-proof-title h-card">AI実装の原点・土台</p>
+          <p class="works-proof-lead">
+            文章生成AIを、趣味の領域で徹底的に運用してきた経験が、実務の制作実績を支える「表現設計」と「長文・構造化生成の運用知見」の土台になっています。
+            この運用知見は、<a href="#works-grid">経営資料の自動生成ツールや意思決定支援</a>にそのまま転用しています。
+          </p>
+          <ul class="works-proof-list">
+            <li>長編小説生成の仕組み化。小説投稿サイト内の評価は、全665,429件中、上位0.2%に入り、ジャンル別ランキング上位を維持（2026/04/17時点）。人気の広がりを受け、公式OP制作やブラウザノベルゲーム化も実施。</li>
+            <li>ファンタジー小説大賞「大賞」。</li>
+            <li>歴史・時代小説大賞「読者賞（読者投票1位）」。</li>
+            <li>その他、奨励賞を複数受賞。</li>
+          </ul>
+        </div>
+        <div class="works-grid" id="works-grid">
+          <article class="work-card work-card--group">
+            <div class="work-visual" aria-hidden="true">
+              <span class="work-icon" aria-hidden="true">
+                <svg class="work-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <!-- Lucide: building-2 -->
+                  <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+                  <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
+                  <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+                  <path d="M10 6h4" />
+                  <path d="M10 10h4" />
+                  <path d="M10 14h4" />
+                  <path d="M10 18h4" />
+                </svg>
+              </span>
+            </div>
+            <p class="work-title-sub">不動産×金融×経営判断の統合AIツール群</p>
+            <h3 class="work-title h-section">株式会社YEBISU様 プロジェクト群</h3>
+            <p class="work-description">
+              不動産・金融・経営判断をつなぐAIツールを、同一クライアント向けに継続的に設計・実装。
+            </p>
+            <p class="work-client">クライアント：株式会社YEBISU様（同一社内の複数ツール）</p>
+            <div class="work-sublist">
+              <details class="work-sub" name="yebisu-pj" open>
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: calculator -->
+                      <rect width="16" height="20" x="4" y="2" rx="2" />
+                      <line x1="8" x2="16" y1="6" y2="6" />
+                      <line x1="16" x2="16" y1="14" y2="18" />
+                      <path d="M16 10h.01" />
+                      <path d="M12 10h.01" />
+                      <path d="M8 10h.01" />
+                      <path d="M12 14h.01" />
+                      <path d="M8 14h.01" />
+                      <path d="M12 18h.01" />
+                      <path d="M8 18h.01" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">物件購入シミュレーター</span>
+                    <span class="work-sub-summary-teaser">購入前後の財務インパクトを1画面で比較・可視化</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    次に買う物件が自社の財務にどう影響するかを即座に分析。DSCR / 自己資本比率 / ROA等を自動計算し、購入前後の変化を可視化。
+                  </p>
+                </div>
+              </details>
+              <details class="work-sub" name="yebisu-pj">
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: banknote -->
+                      <rect width="20" height="12" x="2" y="6" rx="2" />
+                      <circle cx="12" cy="12" r="2" />
+                      <path d="M6 12h.01M18 12h.01" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">借入金ポートフォリオ可視化</span>
+                    <span class="work-sub-summary-teaser">複数借入の残高・返済計画をグラフで一元管理</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    複数の借入金を一元管理。残高推移と年次返済計画をグラフで可視化。元利均等返済を自動計算。
+                  </p>
+                </div>
+              </details>
+              <details class="work-sub" name="yebisu-pj">
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: house (home) -->
+                      <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                      <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">物件パフォーマンスダッシュボード</span>
+                    <span class="work-sub-summary-teaser">利回り・稼働率・キャッシュフローをヒートマップで可視化</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    所有物件ごとの利回り・稼働率・キャッシュフローをヒートマップで表示。好調・不調の物件が一目で分かる。
+                  </p>
+                </div>
+              </details>
+              <details class="work-sub" name="yebisu-pj">
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: file-text -->
+                      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                      <path d="M10 9H8" />
+                      <path d="M16 13H8" />
+                      <path d="M16 17H8" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">銀行提出資料 自動生成ツール</span>
+                    <span class="work-sub-summary-teaser">融資審査向けサマリーと8指標をA4一枚で自動生成</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    決算書と物件データからA4 1枚の銀行向けサマリーを自動生成。融資審査の8指標を自動計算・判定。
+                  </p>
+                </div>
+              </details>
+              <details class="work-sub" name="yebisu-pj">
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: bot -->
+                      <path d="M12 8V4H8" />
+                      <rect width="16" height="12" x="4" y="8" rx="2" />
+                      <path d="M2 14h2" />
+                      <path d="M20 14h2" />
+                      <path d="M15 13v2" />
+                      <path d="M9 13v2" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">経営参謀</span>
+                    <span class="work-sub-summary-teaser">経営判断のための専属の戦略壁打ち相手となる環境を構築。</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    経営判断のための専属の戦略壁打ち相手となる環境を構築。
+                  </p>
+                </div>
+              </details>
+              <details class="work-sub" name="yebisu-pj">
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: chart-column (bar chart) -->
+                      <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+                      <path d="M18 17V9" />
+                      <path d="M13 17V5" />
+                      <path d="M8 17v-3" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">統合版経営ダッシュボード</span>
+                    <span class="work-sub-summary-teaser">複数の業務ツールを1つのダッシュボードに統合し、入力とAIプロンプトを連動</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    複数の業務ツールを1つのダッシュボードに統合。一度の入力で全機能に反映、AIプロンプトも自動生成。
+                  </p>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <article class="work-card work-card--group">
+            <div class="work-visual" aria-hidden="true">
+              <span class="work-icon" aria-hidden="true">
+                <svg class="work-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <!-- Lucide: users -->
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </span>
+            </div>
+            <p class="work-title-sub">競合分析と新規事業の戦略支援</p>
+            <h3 class="work-title h-section">一般社団法人MiRAI様 プロジェクト群</h3>
+            <p class="work-description">
+              地域の教育と事業づくりを支援するMiRAI様向けに、競合の洗い出しから戦略会議の参謀まで、AIを組み込んだツールを設計・実装しています。
+            </p>
+            <p class="work-client">クライアント：一般社団法人MiRAI様（同一団体内の複数案件）</p>
+            <div class="work-sublist">
+              <details class="work-sub" name="mirai-pj" open>
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: search -->
+                      <circle cx="11" cy="11" r="8" />
+                      <path d="m21 21-4.3-4.3" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">事業ベンチマーク分析</span>
+                    <span class="work-sub-summary-teaser">競合の事業モデルをAIで分析し、戦略会議の議論のたたき台に</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    競合の事業モデルをAI駆動で徹底分析。
+                    戦略会議で使える「議論のたたき台」として資料化。
+                  </p>
+                </div>
+              </details>
+              <details class="work-sub" name="mirai-pj">
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: target -->
+                      <circle cx="12" cy="12" r="10" />
+                      <circle cx="12" cy="12" r="6" />
+                      <circle cx="12" cy="12" r="2" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">戦略会議パートナー</span>
+                    <span class="work-sub-summary-teaser">新規事業検討向けのAI参謀として、会議中の壁打ち相手に</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    新規事業検討用のAI参謀。会議中の壁打ち相手として活用。
+                  </p>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <article class="work-card work-card--group">
+            <div class="work-visual" aria-hidden="true">
+              <span class="work-icon" aria-hidden="true">
+                <svg class="work-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <!-- Lucide: layers -->
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                  <polyline points="2 12 12 17 22 12" />
+                </svg>
+              </span>
+            </div>
+            <p class="work-title-sub">趣味と仕事のあいだで育てる、個人のプロダクトと技術検証</p>
+            <h3 class="work-title h-section">個人プロジェクト群</h3>
+            <p class="work-description">
+              依頼案件の傍ら、自分の課題や興味から立ち上げたブラウザ向けサービスや拡張機能です。完成スピードより、試行と学びを積み重ねながら形にしています。
+            </p>
+            <p class="work-client">区分：個人開発・学習（クライアント案件外）</p>
+            <div class="work-sublist">
+              <details class="work-sub" name="personal-pj" open>
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: pen-line -->
+                      <path d="M12 20h9" />
+                      <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">推敲ツール（小説の文章健康診断）</span>
+                    <span class="work-sub-summary-teaser">推敲のヒントを返すブラウザ向けサービス（個人プロダクト・β）</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    LINEオープンチャットで、日本語の文章に悩み、
+                    指摘に耐えられず退会していく人を見たことが開発のきっかけ。
+                    作品の点数化ではなく、次の一行に進むための推敲ヒントを返すブラウザ向けサービス。
+                  </p>
+                </div>
+              </details>
+              <details class="work-sub" name="personal-pj">
+                <summary>
+                  <span class="work-sub-icon" aria-hidden="true">
+                    <svg class="work-sub-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <!-- Lucide: scan-line -->
+                      <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+                      <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                      <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+                      <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                      <path d="M7 12h10" />
+                    </svg>
+                  </span>
+                  <span class="work-sub-summary-main">
+                    <span class="work-sub-summary-title">SmartCapturer</span>
+                    <span class="work-sub-summary-teaser">フルページキャプチャのChrome拡張（開発一時保留・学習継続中）</span>
+                  </span>
+                </summary>
+                <div class="work-sub-body">
+                  <p>
+                    Chrome 拡張でページを縦に繋ぎ、一枚の画像／PDF にまとめるツールを目指した個人プロジェクトです（GoFullPage 系の体験を参考）。
+                    ビューポートや固定ヘッダなどサイト差分の扱いが想定以上に広く、開発は一時保留。Extension・CDP・キャンバス連結まわりを学習し直しています。
+                  </p>
+                </div>
+              </details>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="story-section" id="story">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title h-section">これまでの歩み</h2>
+          <p class="section-lead">学校と研究から、地域と実装へ</p>
+        </div>
+        <ol class="story-list" aria-label="これまでの歩みの要約">
+          <li>
+            <p class="story-step-title h-card">高校でつまずき、立ち直るまで</p>
+            <p class="story-step-text">
+              高校時代、学業でかなりつまずきました。「できない・分からない」ことが続く日々はつらく、努力から目をそらしてしまうこともありました。
+              そこから持ち直すまでには、時間も、気持ちの整理も必要でした。同じように苦しい思いをしている人がいたら、寄り添える側に立ちたい——その思いが、教師を志す原点のひとつになっています。
+            </p>
+          </li>
+          <li>
+            <p class="story-step-title h-card">研究と、学校現場での実践</p>
+            <p class="story-step-text">
+              学生時代、スクールカウンセラーが開く夜の学習・居場所支援で、アルバイトスタッフとして多様な生徒と関わりました。適応指導教室のキャンプや、長期不登校の生徒との関係づくりを通じて、小さな変化が人生を動かす瞬間に立ち会ってきました。
+              その原体験から、当初は中学校志望でしたが、「もっと早い段階から支えたい」と考え、小学校段階での支援へ軸足を移しました。「下から支え、寄りかかれる大木のような存在でありたい」——その姿勢は、ここから始まっています。
+            </p>
+          </li>
+          <li>
+            <p class="story-step-title h-card">論文と学会で、知見を積み上げる</p>
+            <p class="story-step-text">
+              現場で「もっと良くできるはずだ」と感じた課題を深めるため、働きながら三重大学大学院（夜間コース・長期履修）で研究を続けました。その間も、査読付き論文の執筆や学会発表を通じて、現場での手応えを言語化し、知見を積み上げてきました。
+            </p>
+          </li>
+          <li>
+            <p class="story-step-title h-card">県全体の教員支援の場へ</p>
+            <p class="story-step-text">
+              実践と研究の蓄積が評価され、三重県教育委員会の研修員として、三重県総合教育センター（県の教員研修の中核）で研究に携わりました。その後も学校現場と研修の往還を続けながら、「まだできることがある」という思いを持ち続け、現在の活動へつなげています。
+            </p>
+          </li>
+          <li>
+            <p class="story-step-title h-card">個人事業として、設計・実装の軸を一本に</p>
+            <p class="story-step-text">
+              2025年、個人事業主として開業しました。商号は「小瀧創造企画」。学校現場での検証と学術的な裏付けをひとつの軸にまとめ、依頼に応じてAIの設計・実装につなげる体制を整えました。
+            </p>
+          </li>
+          <li>
+            <p class="story-step-title h-card">MiRAIアカデミーに参画</p>
+            <p class="story-step-text">
+              いまは、MiRAIアカデミー小中等部の立ち上げにも参画しています。「子どもたちに未来を楽しむ力を育み、地域の教育インフラを創る」というビジョンの実現に向け、オープンスクールや運営の支援に加え、AI×教育のツールづくりにも関わっています。
+            </p>
+          </li>
+          <li>
+            <p class="story-step-title h-card">子どもと地域の両方へ</p>
+            <p class="story-step-text">
+              子どもたちには、誇れるように「ちゃんとメシが食える」大人として社会で立っていってほしい。その思いから、AIを道具として使いこなし、社会で通用する力を育てることに寄与したいと考えています。あわせて、株式会社YEBISU 代表の水谷真也さんとともに、三重・愛知の中小企業を支えるため、AIを活用した業務の効率化や、経営判断を速くするための伴走支援にも取り組み始めています。
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+    <section class="research-section" id="research">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title h-section">研究・執筆活動</h2>
+          <p class="section-lead">教育とAI、臨床心理の領域で論文・発表を行っています</p>
+        </div>
+        <aside class="research-collab-card" aria-labelledby="research-collab-heading">
+          <p class="research-collab-kicker" id="research-collab-heading">共同研究者</p>
+          <p class="research-collab-name h-card">稲垣友裕</p>
+          <p class="research-collab-affil">常葉大学 健康プロデュース学部 スポーツ健康科学科 講師</p>
+          <p class="research-collab-story">
+            三重大学大学院在学時に同じ学生として出会い、共同研究を開始しました。
+          </p>
+        </aside>
+
+        <div class="research-content" aria-label="研究・執筆活動一覧">
+          <h3 class="paper-subtitle h-card">学術論文</h3>
+          <div class="paper-list">
+            <article class="paper-card">
+              <div class="paper-header">
+                <span class="paper-year">2025</span>
+                <h4 class="paper-title h-card">生成AIの教育活用に関する一考察：GIGAスクール構想と未来展望</h4>
+              </div>
+              <p class="paper-meta">稲垣友裕, 小瀧雄基 / 常葉大学浜松キャンパス教職課程研究年報 第2号 1-7, 2025</p>
+            </article>
+
+            <article class="paper-card paper-card--refereed">
+              <div class="paper-header">
+                <span class="paper-year">2024</span>
+                <h4 class="paper-title h-card">教育の質向上を目指したAI活用の実践と評価：文章生成AIを用いた指導案作成と授業実践の有効性の検証</h4>
+              </div>
+              <p class="paper-meta">小瀧雄基, 稲垣友裕 / 日本基礎教育学会紀要 第29号 177-184, 2024</p>
+              <p class="paper-signal">査読付き · 日本基礎教育学会の公式紀要（学会誌）。学会の審査を経た掲載です。</p>
+            </article>
+
+            <article class="paper-card">
+              <div class="paper-header">
+                <span class="paper-year">2024</span>
+                <h4 class="paper-title h-card">特別支援教育における情報通信技術の活用：保護者との連携に焦点を当てて</h4>
+              </div>
+              <p class="paper-meta">稲垣友裕, 小瀧雄基 / 常葉大学浜松キャンパス教職課程研究年報 第1号 1-10, 2024</p>
+            </article>
+
+            <article class="paper-card paper-card--refereed">
+              <div class="paper-header">
+                <span class="paper-year">2023</span>
+                <h4 class="paper-title h-card">ねらい到達に寄与する補助発問の有効性の検証：小学校1年生における「特別の教科 道徳」と国語科の実践より</h4>
+              </div>
+              <p class="paper-meta">稲垣友裕, 小瀧雄基 / 日本基礎教育学会紀要 第28号 59-64, 2023</p>
+              <p class="paper-signal">査読付き · 日本基礎教育学会の公式紀要（学会誌）。学会の審査を経た掲載です。</p>
+            </article>
+
+            <article class="paper-card">
+              <div class="paper-header">
+                <span class="paper-year">2022</span>
+                <h4 class="paper-title h-card">（萩原浩司）『ゼミナール初等社会科』へのコラム寄稿（2本）</h4>
+              </div>
+              <p class="paper-meta">皇學館大学出版部, 2022年3月 / ISBN: 9784876442218</p>
+              <p class="paper-meta">皇學館大学の元教育学部長、深草正博教授のゼミでゼミ長を務めた経緯を踏まえ、後任の萩原浩司准教授からの依頼で寄稿。</p>
+            </article>
+          </div>
+
+          <h3 class="paper-subtitle with-top-space h-card">学会発表</h3>
+          <div class="paper-list">
+            <article class="paper-card">
+              <div class="paper-header">
+                <span class="paper-year">2023</span>
+                <h4 class="paper-title h-card">日本基礎教育学会 第28回研究大会</h4>
+              </div>
+              <p class="paper-meta">
+                発表タイトル：ねらい到達に寄与する補助発問の有効性の検証<br />
+                ー 小学校1年生における「特別の教科 道徳」と国語科の実践より
+              </p>
+              <p class="paper-meta">
+                会場：オンライン（Zoom）<br />
+                登壇日：2023年8月19日<br />
+                備考：共同研究者（稲垣友裕氏）の代理で登壇、研究発表を担当
+              </p>
+            </article>
+          </div>
+
+          <h3 class="paper-subtitle with-top-space h-card">受賞歴</h3>
+          <div class="paper-list">
+            <article class="paper-card">
+              <div class="paper-header">
+                <span class="paper-year">2025</span>
+                <h4 class="paper-title h-card">第1回 創學賞（2025年2月）</h4>
+              </div>
+              <p class="paper-meta">
+                授与団体：深草会（皇學館大学 教育学部 深草ゼミ・萩原ゼミ OBOG研究会）<br />
+                対象研究：「補助発問による発言変容の有効性 ―小学校実践から学ぶ発問の工夫―」<br />
+                概要：小学校における教育実践に基づく学術研究の成果が評価され、同会が創設した「創學賞」の第1回受賞者に選出。
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="timeline-section" id="career">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title h-section">経歴</h2>
+          <p class="section-lead">教育現場11年 + 大学院での研究 + AI実装（2025年に個人事業として開業）</p>
+        </div>
+        <div class="timeline" aria-label="経歴タイムライン">
+          <article class="timeline-item is-current is-latest">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2026 -</p>
+              <p class="timeline-role">MiRAIアカデミー小中等部の立ち上げに参画</p>
+              <p class="timeline-note">
+                オープンスクール（午前）の運営や現場の運営を支援しつつ、AI×教育のツール開発・実装にも関わっています。
+              </p>
+            </div>
+          </article>
+
+          <article class="timeline-item is-current">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2025 -</p>
+              <p class="timeline-role">個人事業主として開業（商号：小瀧創造企画）</p>
+            </div>
+          </article>
+
+          <article class="timeline-item is-current">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2025 -</p>
+              <p class="timeline-role">塾講師</p>
+              <p class="timeline-note">小中学生向けの学習指導（個別指導を中心）。</p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2022 - 2025</p>
+              <p class="timeline-role">鈴鹿市立加佐登小学校 教諭</p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2021 - 2022</p>
+              <p class="timeline-role">鈴鹿市立天栄中学校 教諭</p>
+              <p class="timeline-note">
+                教諭としての勤務と並行し、三重県教育委員会 研修員として、三重県総合教育センター（三重県教育委員会事務局 研修担当）にて研究に従事。
+              </p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2020 - 2022</p>
+              <p class="timeline-role">牧田いろは教室 スタッフ（日本語指導・ボランティア）</p>
+              <p class="timeline-note">
+                成人の外国籍の学習者向けに日本語を担当。
+              </p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2020 - 2021</p>
+              <p class="timeline-role">鈴鹿市立神戸小学校 教諭</p>
+              <p class="timeline-note">
+                教諭としての勤務と並行し、三重県教育委員会 研修員として、三重県総合教育センター（三重県教育委員会事務局 研修担当）にて研究に従事。
+              </p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2018 - 2021</p>
+              <p class="timeline-role">三重大学大学院 教育学研究科 教育科学専攻 学校教育領域 修了</p>
+              <p class="timeline-note">夜間大学院として勤務と両立。日中は小学校教諭および三重県教育委員会の研修員として従事。</p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2014 - 2020</p>
+              <p class="timeline-role">鈴鹿市立稲生小学校 教諭</p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2010 - 2014</p>
+              <p class="timeline-role">皇學館大学教育学部 教育学科 学校教育コース 卒業</p>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <span class="timeline-dot" aria-hidden="true"></span>
+            <div class="timeline-content">
+              <p class="timeline-year">2007 - 2010</p>
+              <p class="timeline-role">三重県立松阪高等学校 卒業</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="stance-section" id="stance">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title h-section">スタンス</h2>
+          <p class="section-lead">私はこういう形で仕事をしています</p>
+        </div>
+        <div class="stance-content text-left md:text-center">
+          <article class="stance-item">
+            <h3 class="stance-heading h-card"><span class="stance-number">1.</span>作って、渡して、繋ぎます</h3>
+            <p class="stance-text">
+              まずは形にし、現場で回せる形でお渡しします。<br />
+              将来的には、運用をMiRAIで育った次の世代へつないでいきたいと考えています。<br />
+              技術パートナーとして、必要なときだけお手伝いします。
+            </p>
+          </article>
+
+          <article class="stance-item">
+            <h3 class="stance-heading h-card"><span class="stance-number">2.</span>教育から、AIを使いこなす人を育てます</h3>
+            <p class="stance-text">
+              AIを使いこなす未来の人材を育てるところまで見据え、<br />
+              研修・マニュアル・引き継ぎ設計まで視野に入れています。
+            </p>
+          </article>
+
+          <article class="stance-item">
+            <h3 class="stance-heading h-card"><span class="stance-number">3.</span>地域の中小企業を応援します</h3>
+            <p class="stance-text">
+              三重・愛知の経営者が、AIで判断のスピードを上げ、将来をより良くしていく。<br />
+              そのための仕組みづくりと支援を行います。
+            </p>
+          </article>
+
+          <p class="stance-note">—— 長期的にお互い気持ちよく仕事できる関係を大切にしています</p>
+        </div>
+      </div>
+    </section>
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title h-section">お問い合わせ</h2>
+        </div>
+        <div class="contact-content text-left">
+          <div class="contact-divider" aria-hidden="true"></div>
+          <p class="contact-main">
+            ご依頼・ご相談は、原則として<br />
+            株式会社YEBISU 代表 水谷真也 経由でお願いしています
+          </p>
+          <p class="contact-sub">
+            水谷さんの人的ネットワークを通じて、<br />
+            信頼関係のある方とのお仕事を大切にしています。
+          </p>
+          <div class="contact-divider bottom" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-name">小瀧 雄基 / Yuki Kotaki</p>
+    <p class="footer-copy">&copy; 2026 Yuki Kotaki. All rights reserved.</p>
+
+    <nav class="footer-nav" aria-label="ページ内ナビゲーション">
+      <a href="#authority">専門性</a>
+      <a href="#capabilities">できること</a>
+      <a href="#works">制作実績</a>
+      <a href="#story">歩み</a>
+      <a href="#research">研究・執筆</a>
+      <a href="#career">経歴</a>
+      <a href="#stance">スタンス</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
+
+    <div class="footer-links" aria-label="研究プロフィール・論文データベース">
+      <!-- ORCIDが未取得のため一旦非表示 -->
+      <!-- <a class="footer-profile-link" href="https://orcid.org/" ...><span class="footer-profile-icon">…</span><span class="footer-profile-label">ORCID</span></a> -->
+      <a
+        class="footer-profile-link"
+        href="https://scholar.google.com/scholar?hl=ja&as_sdt=0%2C5&q=%E5%B0%8F%E7%80%A7%E9%9B%84%E5%9F%BA&btnG="
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Google Scholar — 著者名で検索した一覧を開きます"
+        aria-label="Google Scholarで小瀧雄基を検索"
+      >
+        <span class="footer-profile-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+          </svg>
+        </span>
+        <span class="footer-profile-label">Google Scholar</span>
+      </a>
+      <a
+        class="footer-profile-link"
+        href="https://cir.nii.ac.jp/all?q=%E5%B0%8F%E7%80%A7%E9%9B%84%E5%9F%BA"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="CiNii Research — 国立情報学研究所の学術情報ナビゲータで検索"
+        aria-label="CiNii Researchで小瀧雄基の論文を開く"
+      >
+        <span class="footer-profile-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2" />
+            <polyline points="2 17 12 22 22 17" />
+            <polyline points="2 12 12 17 22 12" />
+          </svg>
+        </span>
+        <span class="footer-profile-label">CiNii Research</span>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add("js-enabled");
+
+    const revealTargets = document.querySelectorAll("main > section, footer");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    revealTargets.forEach((section) => {
+      section.classList.add("reveal-on-scroll");
+    });
+
+    if (!reduceMotion && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+
+      revealTargets.forEach((section) => observer.observe(section));
+    } else {
+      revealTargets.forEach((section) => section.classList.add("is-visible"));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1386 @@
+@import "./tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+    font-feature-settings: "palt" 1;
+    letter-spacing: 0.02em;
+    overflow-x: clip;
+  }
+
+  :where(
+      a[href],
+      button:not(:disabled),
+      summary,
+      input:not([type="hidden"]),
+      textarea,
+      select,
+      [role="button"]:not([aria-disabled="true"])
+    ):focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-serif;
+    line-height: 1.55;
+    letter-spacing: 0.04em;
+  }
+
+  h4 {
+    @apply font-serif;
+    line-height: 1.55;
+    letter-spacing: 0.03em;
+  }
+}
+
+@layer components {
+  .mix-en {
+    font-family: system-ui, sans-serif;
+  }
+
+  .h-display {
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    @apply text-brand-primary;
+  }
+
+  .h-section {
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.55;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    @apply text-brand-primary;
+  }
+
+  .h-card {
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: 1.125rem;
+    line-height: 1.55;
+    letter-spacing: 0.03em;
+    font-weight: 700;
+    @apply text-brand-primary;
+  }
+
+  .hero-tagline {
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: clamp(1.125rem, 3vw, 1.375rem);
+    line-height: 1.55;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    @apply text-brand-primary;
+  }
+
+  /* ヒーロー（主張ファースト・KPI・CTA） */
+  .hero-grain {
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  .hero-eyebrow {
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    @apply text-brand-primary;
+  }
+
+  .hero-headline {
+    margin: 0.75rem 0 0;
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: clamp(1.375rem, 3.6vw, 2.375rem);
+    font-weight: 700;
+    line-height: 1.38;
+    letter-spacing: 0.04em;
+    overflow-wrap: anywhere;
+    @apply text-brand-primary;
+  }
+
+  .hero-lead {
+    margin: 0;
+    font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+    line-height: 1.85;
+    @apply text-brand-ink;
+  }
+
+  .hero-kpi-bar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgb(30 58 95 / 0.12);
+  }
+
+  @media (min-width: 640px) {
+    .hero-kpi-bar {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem 1.25rem;
+    }
+  }
+
+  .hero-kpi-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .hero-kpi-value {
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    @apply text-brand-primary;
+  }
+
+  .hero-kpi-label {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    color: #3d4d5c;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    border: 1px solid rgb(30 58 95 / 0.22);
+    background-color: transparent;
+    padding: 0.625rem 1.125rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease,
+      color 0.15s ease;
+    @apply text-brand-primary;
+  }
+
+  .hero-cta:hover {
+    background-color: rgb(30 58 95 / 0.06);
+    border-color: rgb(30 58 95 / 0.35);
+  }
+
+  .hero-cta:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  .hero-photo {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 9999px;
+    border: 3px solid rgb(46 117 182 / 0.35);
+    object-fit: cover;
+    object-position: center 24%;
+    background: #e9ecef;
+    box-shadow: 0 0 0 1px rgb(27 79 114 / 0.12);
+  }
+
+  @media (min-width: 768px) {
+    .hero-photo {
+      width: 14rem;
+      height: 14rem;
+      border-width: 4px;
+    }
+  }
+
+  /* 権威カード用 Chip（period のみアクセント色） */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    padding: 0.3125rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    font-family: "Noto Sans JP", system-ui, sans-serif;
+  }
+
+  .chip--period {
+    border-color: rgb(201 169 97 / 0.55);
+    background-color: rgb(201 169 97 / 0.14);
+    color: var(--brand-primary);
+  }
+
+  .chip--status {
+    @apply border-brand-line bg-brand-paper text-brand-ink;
+  }
+
+  .chip--body {
+    border-color: rgb(30 58 95 / 0.18);
+    background-color: #ffffff;
+    @apply text-brand-ink;
+  }
+
+  .chip--tag {
+    border-color: rgb(30 58 95 / 0.14);
+    background-color: rgb(30 58 95 / 0.05);
+    padding: 0.2rem 0.45rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: rgb(44 62 80 / 0.88);
+  }
+
+  .authority-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .authority-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    border-radius: 12px;
+    border-width: 1px;
+    @apply border-brand-line bg-white;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(30, 58, 95, 0.04);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .authority-card .authority-description {
+    margin: 0.25rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.85;
+    @apply text-brand-ink;
+  }
+
+  /* できること（アイコン付きカード） */
+  .capabilities-root {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .capability-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    border-radius: 8px;
+    border-width: 1px;
+    @apply border-brand-line bg-white;
+    padding: 1.25rem;
+    text-align: left;
+    box-shadow: 0 1px 2px rgba(30, 58, 95, 0.05);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .capability-card:hover {
+    box-shadow: 0 2px 10px rgba(30, 58, 95, 0.08);
+  }
+
+  .capability-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background-color: var(--brand-primary);
+    transition: transform 0.22s ease;
+  }
+
+  .capability-card:hover::after {
+    transform: scaleX(1);
+  }
+
+  .capability-card:focus-within {
+    box-shadow: 0 2px 10px rgba(30, 58, 95, 0.08);
+  }
+
+  .capability-card:focus-within::after {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .capability-card::after {
+      transition: none;
+    }
+
+    .capability-card:hover::after,
+    .capability-card:focus-within::after {
+      transform: scaleX(1);
+    }
+  }
+
+  .capability-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    line-height: 0;
+  }
+
+  .capability-card-heading {
+    margin: 0;
+  }
+
+  .capability-card-desc {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    @apply text-brand-ink;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .capabilities-bridge {
+    margin: 0.25rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: #2c3e50;
+  }
+
+  .capabilities-footnote {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.65;
+    color: #3d4d5c;
+  }
+
+  /* 制作実績（Works / ProjectCard） */
+  .works-root .works-trust-note {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+
+  .works-root .works-trust-note-text {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    @apply text-brand-ink;
+  }
+
+  .works-trust-badge {
+    display: inline-block;
+    margin-left: 0.25rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.5;
+    @apply border-brand-primary/20 bg-brand-primary/5 text-brand-primary;
+  }
+
+  .works-foundation-kicker {
+    margin: 0 0 0.35rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #1e3a5f;
+  }
+
+  .works-foundation-title {
+    margin: 0 0 0.75rem;
+  }
+
+  .works-foundation-lead {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    line-height: 1.85;
+    @apply text-brand-ink;
+  }
+
+  .works-foundation-link {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    @apply text-brand-primary;
+  }
+
+  .works-foundation-link:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .works-foundation-bullets {
+    margin: 0;
+    padding-left: 1.15rem;
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    @apply text-brand-ink/90;
+  }
+
+  .works-foundation-bullets li + li {
+    margin-top: 0.35rem;
+  }
+
+  .project-card-band {
+    isolation: isolate;
+  }
+
+  .project-card-band-bg {
+    background: linear-gradient(
+      165deg,
+      var(--brand-primary) 0%,
+      color-mix(in srgb, var(--brand-primary) 55%, var(--brand-ink) 45%) 100%
+    );
+    opacity: 0.92;
+  }
+
+  .project-card-band-num {
+    position: relative;
+    z-index: 1;
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: clamp(2.75rem, 8vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: rgb(255 255 255 / 0.92);
+  }
+
+  .project-card-band-tag {
+    position: absolute;
+    right: 0.75rem;
+    top: 0.65rem;
+    z-index: 2;
+    max-width: min(12rem, 70%);
+    border-radius: 9999px;
+    border-width: 1px;
+    border-color: rgb(255 255 255 / 0.35);
+    background-color: rgb(255 255 255 / 0.12);
+    padding: 0.2rem 0.55rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    color: rgb(255 255 255 / 0.95);
+    text-align: center;
+  }
+
+  .project-card-meta-chip {
+    margin: 0;
+    display: inline-flex;
+    align-self: flex-start;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    @apply border-brand-line bg-brand-paper;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    @apply text-brand-ink;
+  }
+
+  .project-card-title.h-section {
+    font-size: clamp(1.2rem, 2.35vw, 1.65rem);
+    line-height: 1.4;
+    letter-spacing: 0.035em;
+  }
+
+  .project-card-subtitle {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.55;
+    color: rgb(44 62 80 / 0.88);
+  }
+
+  .project-card-desc {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    @apply text-brand-ink;
+  }
+
+  .project-feature-trigger {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: 0.5rem;
+    border: none;
+    background: transparent;
+    padding: 0.75rem 0;
+    text-align: left;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+  }
+
+  .project-feature-trigger:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .project-feature-trigger-icon {
+    flex-shrink: 0;
+    line-height: 0;
+    padding-top: 0.1rem;
+  }
+
+  .project-feature-trigger-text {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .project-feature-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.35;
+    @apply text-brand-primary;
+  }
+
+  .project-feature-teaser {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: #3d4d5c;
+  }
+
+  .project-feature-chevron {
+    margin-top: 0.15rem;
+    transition: transform 200ms ease;
+  }
+
+  .project-feature-chevron--open {
+    transform: rotate(-180deg);
+  }
+
+  .project-feature-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 200ms ease;
+  }
+
+  .project-feature-panel--open {
+    grid-template-rows: 1fr;
+  }
+
+  .project-feature-panel-inner {
+    overflow: hidden;
+  }
+
+  .project-feature-body {
+    margin: 0;
+    padding: 0 0 0.75rem 1.85rem;
+    font-size: 0.8125rem;
+    line-height: 1.75;
+    @apply text-brand-ink;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-feature-panel {
+      transition: none;
+    }
+
+    .project-feature-chevron {
+      transition: none;
+    }
+  }
+
+  /* 歩み（Journey） */
+  .journey-root {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .journey-rail {
+    margin-left: 1rem;
+    border-left-width: 2px;
+    @apply border-brand-line;
+    padding-left: 1.5rem;
+    padding-top: 0.125rem;
+  }
+
+  @media (min-width: 768px) {
+    .journey-rail {
+      margin-left: 1.25rem;
+      padding-left: 1.75rem;
+    }
+  }
+
+  .journey-step {
+    position: relative;
+    padding-bottom: 1.75rem;
+  }
+
+  .journey-step:last-child {
+    padding-bottom: 0;
+  }
+
+  .journey-marker {
+    position: absolute;
+    left: calc(-1.5rem - 1px);
+    top: 0;
+    display: flex;
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    transform: translateX(-50%);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #ffffff;
+    background-color: var(--brand-primary);
+  }
+
+  @media (min-width: 768px) {
+    .journey-marker {
+      left: calc(-1.75rem - 1px);
+    }
+  }
+
+  .journey-step-content {
+    padding-top: 0.05rem;
+  }
+
+  .journey-year {
+    margin: 0 0 0.35rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    color: #3d4d5c;
+  }
+
+  .journey-title {
+    margin: 0 0 0.65rem;
+  }
+
+  .journey-body {
+    margin: 0 0 0.65rem;
+    font-size: 0.9375rem;
+    line-height: 1.85;
+    @apply text-brand-ink;
+  }
+
+  .journey-body:last-child {
+    margin-bottom: 0;
+  }
+
+  .journey-pull {
+    margin: 0 0 0.75rem;
+    border-left: 3px solid rgb(30 58 95 / 0.35);
+    padding-left: 1rem;
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: 0.9375rem;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.75;
+    @apply text-brand-ink;
+  }
+
+  .journey-pull:last-child {
+    margin-bottom: 0;
+  }
+
+  .journey-more {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.55s ease;
+  }
+
+  .journey-root--expanded .journey-more {
+    max-height: 800vh;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .journey-more {
+      transition: none;
+    }
+  }
+
+  .journey-expand-btn {
+    align-self: flex-start;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    border-color: rgb(30 58 95 / 0.22);
+    background-color: transparent;
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    @apply text-brand-primary;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .journey-expand-btn:hover {
+    background-color: rgb(30 58 95 / 0.06);
+    border-color: rgb(30 58 95 / 0.35);
+  }
+
+  .journey-expand-btn:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .authority-grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .authority-card {
+      padding: 20px;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .authority-card:hover {
+      @apply border-brand-primary;
+      box-shadow: 0 2px 8px rgba(30, 58, 95, 0.08);
+    }
+  }
+
+  .authority-card:focus-within {
+    @apply border-brand-primary;
+    box-shadow: 0 2px 8px rgba(30, 58, 95, 0.08);
+  }
+
+  .authority-card-eyebrow {
+    margin: 0;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
+    color: #3d4d5c;
+  }
+
+  .authority-card-title {
+    margin: 0;
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: 0.03em;
+    @apply text-brand-ink;
+  }
+
+  .stance-section .h-section {
+    @apply text-white;
+  }
+
+  .stance-section .h-card {
+    @apply text-white;
+  }
+
+  .stance-section .section-lead {
+    color: #e0e0e0;
+  }
+
+  /* 本文ブロック：色・行間 */
+  .story-step-text,
+  .work-description,
+  .capability-description,
+  .section-lead,
+  .contact-main,
+  .contact-sub,
+  .research-collab-story,
+  .research-collab-affil,
+  .works-proof-lead,
+  .work-sub-body p {
+    @apply text-brand-ink;
+    line-height: 1.9;
+  }
+
+  /* 段落間（約 mb-5） */
+  .story-step-text,
+  .work-description,
+  .capability-description,
+  .contact-main,
+  .contact-sub,
+  .research-collab-story,
+  .works-proof-lead,
+  .work-sub-body p {
+    margin-bottom: 1.25rem;
+  }
+
+  .catch-copy,
+  .catch-copy-sub {
+    @apply text-brand-ink;
+    line-height: 1.9;
+  }
+
+  .catch-copy-wrap p:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
+
+  .catch-copy-wrap p:last-child,
+  .authority-card p:last-child,
+  .capability-item p:last-child,
+  .capability-card p:last-child,
+  .contact-content p:last-child,
+  .work-sub-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .story-list > li .story-step-text {
+    margin-bottom: 0;
+  }
+
+  /* 研究セクション：プロフィールチップ + 統一カード */
+  .research-profile-chip {
+    margin-bottom: 1.75rem;
+    padding: 1rem 1.15rem;
+    border-radius: var(--radius-card);
+    border: 1px solid rgb(30 58 95 / 0.12);
+    background: #ffffff;
+    box-shadow: var(--shadow-card);
+  }
+
+  .research-profile-chip__kicker {
+    margin: 0 0 0.35rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3d4d5c;
+  }
+
+  .research-profile-chip__name {
+    margin: 0 0 0.25rem;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    @apply text-brand-ink;
+  }
+
+  .research-profile-chip__affil {
+    margin: 0 0 0.65rem;
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    color: #3d4d5c;
+  }
+
+  .research-profile-chip__story {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.85;
+    color: #2c3e50;
+  }
+
+  .research-output-wrap {
+    margin-top: 0.25rem;
+  }
+
+  .research-filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .research-filter-tab {
+    cursor: pointer;
+    border: 1px solid rgb(30 58 95 / 0.2);
+    background: #fff;
+    color: #2c3e50;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .research-filter-tab:hover {
+    border-color: rgb(30 58 95 / 0.35);
+    background: rgb(30 58 95 / 0.04);
+  }
+
+  .research-filter-tab:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  .research-filter-tab.is-active {
+    border-color: var(--brand-primary);
+    background: var(--brand-primary);
+    color: #fff;
+  }
+
+  .research-output-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .research-output-card {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    padding: 1rem 1rem 1rem 0.85rem;
+    border-radius: var(--radius-card);
+    border: 1px solid rgb(30 58 95 / 0.1);
+    background: #ffffff;
+    box-shadow: var(--shadow-card);
+  }
+
+  .research-year-badge {
+    flex-shrink: 0;
+    min-width: 3.25rem;
+    padding: 0.45rem 0.35rem;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    background: var(--brand-accent);
+    color: var(--brand-primary-deep);
+  }
+
+  .research-output-card__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .research-kind-label {
+    display: inline-block;
+    margin-bottom: 0.35rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #3d4d5c;
+  }
+
+  .research-output-card__title {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    @apply text-brand-ink;
+  }
+
+  .research-output-card__meta {
+    margin-bottom: 0.5rem;
+  }
+
+  .research-meta-line {
+    margin: 0 0 0.35rem;
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    color: #3d4d5c;
+  }
+
+  .research-meta-line:last-child {
+    margin-bottom: 0;
+  }
+
+  .research-output-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+  }
+
+  .research-external-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgb(30 58 95 / 0.12);
+  }
+
+  .research-external-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 10px;
+    border: 1px solid rgb(30 58 95 / 0.18);
+    background: #fff;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--brand-primary);
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .research-external-link:hover {
+    background: rgb(30 58 95 / 0.05);
+    border-color: rgb(30 58 95 / 0.3);
+  }
+
+  .research-external-link:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  .research-external-link__icon {
+    display: flex;
+    color: var(--brand-accent);
+  }
+
+  .research-external-link__icon svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .research-external-link__label {
+    line-height: 1.2;
+  }
+
+  .research-external-link__external {
+    flex-shrink: 0;
+    opacity: 0.55;
+    margin-left: 0.1rem;
+  }
+
+  @media (max-width: 520px) {
+    .research-output-card {
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    .research-year-badge {
+      align-self: flex-start;
+    }
+  }
+
+  /* 経歴：年度軸 + イベント（並走はスタック） */
+  .career-section .section-lead {
+    font-size: clamp(1rem, 2.4vw, 1.1875rem);
+    line-height: 1.75;
+    font-weight: 500;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .career-axis-timeline {
+    position: relative;
+    margin-top: 0.5rem;
+    max-width: 52rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.25rem;
+  }
+
+  .career-axis-timeline::before {
+    content: "";
+    position: absolute;
+    left: calc(5.75rem + 0.25rem);
+    top: 0.35rem;
+    bottom: 0.35rem;
+    width: 2px;
+    background: rgb(30 58 95 / 0.14);
+    border-radius: 1px;
+  }
+
+  .career-timeline-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 5.75rem minmax(0, 1fr);
+    gap: 1rem 1.1rem;
+    align-items: start;
+    padding-bottom: 1.35rem;
+  }
+
+  .career-timeline-row:last-child {
+    padding-bottom: 0;
+  }
+
+  .career-timeline-axis {
+    position: relative;
+    padding-right: 0.65rem;
+    text-align: right;
+  }
+
+  .career-timeline-axis::after {
+    content: "";
+    position: absolute;
+    right: -6px;
+    top: 0.55rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid rgb(30 58 95 / 0.28);
+    z-index: 1;
+    transform: translateX(50%);
+  }
+
+  .career-timeline-row:has(.is-latest) .career-timeline-axis::after {
+    border-color: var(--brand-accent);
+    background: var(--brand-accent-soft);
+    box-shadow: 0 0 0 2px rgb(201 169 97 / 0.25);
+  }
+
+  .career-timeline-row:has(.is-current):not(:has(.is-latest)) .career-timeline-axis::after {
+    border-color: var(--brand-primary);
+    background: rgb(30 58 95 / 0.12);
+  }
+
+  .career-timeline-axis-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 800;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    color: var(--brand-primary);
+    font-family: "Noto Sans JP", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .career-timeline-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  .career-event-card {
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-card);
+    border: 1px solid rgb(30 58 95 / 0.1);
+    background: #ffffff;
+    box-shadow: var(--shadow-card);
+  }
+
+  .career-event-card.is-current {
+    border-color: rgb(30 58 95 / 0.22);
+  }
+
+  .career-event-card.is-latest {
+    border-color: rgb(201 169 97 / 0.45);
+    box-shadow: 0 2px 12px rgb(30 58 95 / 0.07);
+  }
+
+  .career-period-chip {
+    display: inline-block;
+    margin-bottom: 0.45rem;
+    padding: 0.22rem 0.55rem;
+    border-radius: 6px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    background: rgb(30 58 95 / 0.09);
+    color: var(--brand-primary);
+    border: 1px solid rgb(30 58 95 / 0.12);
+  }
+
+  .career-event-role {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+  }
+
+  .career-event-notes {
+    margin-top: 0.45rem;
+  }
+
+  .career-event-note {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    color: #3d4d5c;
+  }
+
+  .career-event-note + .career-event-note {
+    margin-top: 0.35rem;
+  }
+
+  @media (max-width: 520px) {
+    .career-axis-timeline {
+      padding-left: 0;
+    }
+
+    .career-axis-timeline::before {
+      left: 4.25rem;
+    }
+
+    .career-timeline-row {
+      grid-template-columns: 4.25rem minmax(0, 1fr);
+      gap: 0.65rem 0.75rem;
+    }
+
+    .career-timeline-axis-label {
+      font-size: 0.75rem;
+    }
+  }
+
+  /* スタンス：濃紺 ink + 3カラム + パララックス背景 */
+  .stance-parallax-layer {
+    top: -8%;
+    height: 116%;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stance-parallax-layer {
+      transform: none !important;
+      will-change: auto;
+    }
+  }
+
+  .stance-panel {
+    margin-top: 0.35rem;
+  }
+
+  .stance-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+  }
+
+  @media (min-width: 768px) {
+    .stance-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem 1.5rem;
+      align-items: stretch;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .stance-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* Reveal ラッパーが 1 枚目だけ入るため、グリッド行の高さに揃える */
+  .stance-grid > .reveal-item {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .stance-grid > .reveal-item > .stance-card {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .stance-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    padding: 1.2rem 1rem;
+    border-radius: var(--radius-card);
+    border: 1px solid rgb(255 255 255 / 0.12);
+    background: rgb(255 255 255 / 0.04);
+  }
+
+  .stance-card-index {
+    display: block;
+    font-family: "Noto Serif JP", ui-serif, serif;
+    font-size: clamp(2rem, 3.5vw, 2.625rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--brand-accent);
+    margin-bottom: 0.7rem;
+  }
+
+  .stance-card-title {
+    margin: 0 0 0.65rem;
+  }
+
+  .stance-card-body {
+    margin: 0;
+    flex: 1 1 auto;
+    font-size: 0.9375rem;
+    line-height: 2;
+    color: rgb(255 255 255 / 0.8);
+  }
+
+  .stance-closing-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: clamp(2.75rem, 7vw, 4.5rem);
+    padding-top: 0.25rem;
+    box-sizing: border-box;
+  }
+
+  .stance-closing-line {
+    width: 100%;
+    height: 1px;
+    margin: 0 0 clamp(2rem, 5vw, 3rem);
+    background: rgb(255 255 255 / 0.2);
+  }
+
+  .stance-closing-text {
+    margin: 0 auto;
+    max-width: 38rem;
+    padding: 0 1.25rem;
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.9;
+    letter-spacing: 0.035em;
+    color: #e8eaed;
+  }
+
+  /* スクロールイン（Reveal.tsx） */
+  .reveal-item {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 600ms ease-out, transform 600ms ease-out;
+  }
+
+  .reveal-item--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-item,
+    .reveal-item--visible {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+@layer utilities {
+  .text-flow-p p + p {
+    margin-top: 0;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
