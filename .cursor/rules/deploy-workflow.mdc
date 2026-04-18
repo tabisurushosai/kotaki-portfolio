@@ -9,3 +9,4 @@ alwaysApply: true
 - 案内・手順では **「ローカルで npm run dev / build を実行」** をデフォルトにしない。変更の反映は **Git へ push → Vercel がビルド** を主経路として説明する。
 - 検証が必要な場合も、可能なら **Vercel のプレビューデプロイ** や GitHub 上の差分確認を優先する。
 - エージェント側の検証でローカルコマンドを使うのはよいが、ユーザーへの返答では上記前提に合わせる。
+- GitHub 初回公開と Vercel 連携は `scripts/push-and-link-vercel.sh`（要 `GH_TOKEN`）を案内する。
