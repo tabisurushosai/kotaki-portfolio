@@ -85,7 +85,7 @@ export function PortfolioSections() {
       <Section
         id="contact"
         className="contact-section"
-        tone="white"
+        tone="ink"
         title="お問い合わせ"
       >
         <ContactBody />

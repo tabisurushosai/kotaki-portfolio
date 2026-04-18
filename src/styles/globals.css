@@ -825,6 +825,23 @@
     margin-bottom: 1.25rem;
   }
 
+  /* お問い合わせ（濃色帯）: 共通の text-brand-ink より後ろで淡色を固定 */
+  section#contact.bg-brand-primary-deep .contact-main {
+    color: #f3f6f9;
+  }
+
+  section#contact.bg-brand-primary-deep .contact-sub {
+    color: #e4edf5;
+  }
+
+  section#contact.bg-brand-primary-deep .contact-sub--note {
+    color: #d0dce8;
+  }
+
+  section#contact.bg-brand-primary-deep .contact-divider {
+    background: rgb(255 255 255 / 0.28);
+  }
+
   .catch-copy,
   .catch-copy-sub {
     @apply text-brand-ink;
