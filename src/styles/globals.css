@@ -182,7 +182,7 @@
     outline-offset: 2px;
   }
 
-  /* 縦長元画像：上寄せトリミング＋軽い拡大で顔の占有を 60〜70% 帯へ */
+  /* 縦長元画像：顔が円の縦方向中央付近に来るよう object-position / scale 原点を調整 */
   .hero-photo-wrap {
     flex-shrink: 0;
     width: 10rem;
@@ -199,9 +199,9 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 22%;
-    transform: scale(1.22);
-    transform-origin: 50% 34%;
+    object-position: center 40%;
+    transform: scale(1.2);
+    transform-origin: 50% 42%;
   }
 
   @media (min-width: 768px) {
