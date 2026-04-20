@@ -61,17 +61,19 @@ export function Hero() {
           </div>
 
           <div className="order-1 flex justify-center md:order-2 md:justify-end md:pt-1">
-            <img
-              className="hero-photo"
-              src="/kotaki-profile.png"
-              alt="小瀧雄基の顔写真"
-              width={768}
-              height={1024}
-              sizes="(max-width: 768px) 160px, 224px"
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-            />
+            <div className="hero-photo-wrap">
+              <img
+                className="hero-photo"
+                src="/kotaki-profile.png"
+                alt="小瀧雄基の顔写真"
+                width={768}
+                height={1024}
+                sizes="(max-width: 768px) 160px, 224px"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </div>
           </div>
         </div>
       </Container>

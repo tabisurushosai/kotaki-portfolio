@@ -159,18 +159,26 @@
       padding-top: 64px;
     }
 
-    .profile-photo {
+    .profile-photo-wrap {
       width: 160px;
       height: 160px;
+      margin-inline: auto;
+      margin-bottom: 24px;
       border-radius: 50%;
-      object-fit: cover;
-      object-position: center 32%;
+      overflow: hidden;
       border: 4px solid var(--sub-color);
       box-shadow: 0 0 0 2px rgba(27, 79, 114, 0.24);
       background: #E9ECEF;
+    }
+
+    .profile-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 22%;
+      transform: scale(1.22);
+      transform-origin: 50% 34%;
       display: block;
-      margin-inline: auto;
-      margin-bottom: 24px;
     }
 
     .name-jp {
@@ -1549,15 +1557,17 @@
   <main id="top">
     <section class="header-section">
       <div class="container">
-        <img
-          class="profile-photo"
-          src="./kotaki-profile.png"
-          alt="小瀧雄基のプロフィール写真"
-          width="768"
-          height="1024"
-          loading="eager"
-          decoding="async"
-        />
+        <div class="profile-photo-wrap">
+          <img
+            class="profile-photo"
+            src="./kotaki-profile.png"
+            alt="小瀧雄基のプロフィール写真"
+            width="768"
+            height="1024"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
         <h1 class="name-jp h-display">小瀧 雄基</h1>
         <p class="name-en mix-en">Yuki Kotaki</p>
         <p class="subtitle hero-tagline">教育 × AI × 実装</p>
