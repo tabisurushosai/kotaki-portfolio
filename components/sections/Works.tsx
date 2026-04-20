@@ -3,6 +3,7 @@ import {
   BarChart3,
   Bot,
   Calculator,
+  Cloud,
   FileText,
   Home,
   MessagesSquare,
@@ -87,6 +88,13 @@ const PERSONAL_FEATURES: ProjectFeature[] = [
     title: "SmartCapturer",
     teaser: "フルページキャプチャのChrome拡張（開発一時保留・学習継続中）",
     body: "Chrome 拡張でページを縦に繋ぎ、一枚の画像／PDF にまとめるツールを目指した個人プロジェクトです（GoFullPage 系の体験を参考）。ビューポートや固定ヘッダなどサイト差分の扱いが想定以上に広く、開発は一時保留。Extension・CDP・キャンバス連結まわりを学習し直しています。",
+  },
+  {
+    icon: Cloud,
+    title: "タイトラボ",
+    teaser:
+      "『小説家になろう』ランキングの集約と頻出語可視化のブラウザ向けWebアプリ（個人開発）",
+    body: "「小説家になろう」のランキングデータを集約し、語の出現傾向を読み取るブラウザ向けWebアプリです。ソースやジャンルをフィルタしつつ、トークンクラウドでタイトル・あらすじ・タグごとの頻出語を比較でき、語を選べば共起語や該当作品へのリンクなど、文脈に踏み込んだ情報もたどれます。",
   },
 ];
 
