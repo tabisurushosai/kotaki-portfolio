@@ -66,7 +66,7 @@ export function Hero() {
                 className="hero-photo"
                 src="/kotaki-profile.png"
                 alt="小瀧雄基の顔写真"
-                width={768}
+                width={1024}
                 height={1024}
                 sizes="(max-width: 768px) 160px, 224px"
                 loading="eager"
