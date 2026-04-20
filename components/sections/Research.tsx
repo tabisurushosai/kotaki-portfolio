@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { ExternalLink } from "lucide-react";
 import { CINII_URL, SCHOLAR_URL } from "../../src/config/site";
 import { Chip } from "../ui/Chip";
@@ -116,16 +116,13 @@ function sortResearchItems(items: ResearchItem[]): ResearchItem[] {
   });
 }
 
-const FILTER_TABS: { id: "all" | ResearchKind; label: string }[] = [
-  { id: "all", label: "すべて" },
-  { id: "paper", label: "論文" },
-  { id: "conference", label: "学会発表" },
-  { id: "award", label: "受賞" },
-];
-
 function ResearchOutputCard({ item }: { item: ResearchItem }) {
   const kindLabel =
-    item.kind === "conference" ? "発表" : item.kind === "award" ? "受賞" : null;
+    item.kind === "paper"
+      ? "論文"
+      : item.kind === "conference"
+        ? "発表"
+        : "受賞";
 
   return (
     <article className="research-output-card">
@@ -133,9 +130,7 @@ function ResearchOutputCard({ item }: { item: ResearchItem }) {
         {item.year}
       </div>
       <div className="research-output-card__body">
-        {kindLabel ? (
-          <span className="research-kind-label">{kindLabel}</span>
-        ) : null}
+        <span className="research-kind-label">{kindLabel}</span>
         <h3 className="research-output-card__title h-card">{item.title}</h3>
         <div className="research-output-card__meta">
           {item.metaLines.map((line, i) => (
@@ -159,14 +154,7 @@ function ResearchOutputCard({ item }: { item: ResearchItem }) {
 }
 
 export function Research() {
-  const [filter, setFilter] = useState<"all" | ResearchKind>("all");
-
   const sorted = useMemo(() => sortResearchItems(RESEARCH_ITEMS), []);
-
-  const visible = useMemo(
-    () => (filter === "all" ? sorted : sorted.filter((i) => i.kind === filter)),
-    [sorted, filter]
-  );
 
   return (
     <>
@@ -187,25 +175,8 @@ export function Research() {
       </aside>
 
       <div className="research-output-wrap" aria-label="研究・執筆アウトプット">
-        <div className="research-filter-tabs" role="tablist" aria-label="表示の切り替え">
-          {FILTER_TABS.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              role="tab"
-              aria-selected={filter === tab.id}
-              className={
-                "research-filter-tab" + (filter === tab.id ? " is-active" : "")
-              }
-              onClick={() => setFilter(tab.id)}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
         <div className="research-output-list">
-          {visible.map((item, idx) =>
+          {sorted.map((item, idx) =>
             idx === 0 ? (
               <Reveal key={item.id} delayMs={100}>
                 <ResearchOutputCard item={item} />

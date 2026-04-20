@@ -366,16 +366,19 @@
 
   /* 制作実績（Works / ProjectCard） */
   .works-root .works-trust-note {
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
+    max-width: 42rem;
     border: none;
     background: transparent;
+    text-align: center;
   }
 
   .works-root .works-trust-note-text {
     margin: 0;
     font-size: 0.875rem;
     line-height: 1.75;
+    text-align: center;
     @apply text-brand-ink;
   }
 
@@ -907,42 +910,6 @@
 
   .research-output-wrap {
     margin-top: 0.25rem;
-  }
-
-  .research-filter-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .research-filter-tab {
-    cursor: pointer;
-    border: 1px solid rgb(30 58 95 / 0.2);
-    background: #fff;
-    color: #2c3e50;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    padding: 0.35rem 0.75rem;
-    border-radius: 999px;
-    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-  }
-
-  .research-filter-tab:hover {
-    border-color: rgb(30 58 95 / 0.35);
-    background: rgb(30 58 95 / 0.04);
-  }
-
-  .research-filter-tab:focus-visible {
-    outline: 2px solid var(--brand-primary);
-    outline-offset: 2px;
-  }
-
-  .research-filter-tab.is-active {
-    border-color: var(--brand-primary);
-    background: var(--brand-primary);
-    color: #fff;
   }
 
   .research-output-list {
